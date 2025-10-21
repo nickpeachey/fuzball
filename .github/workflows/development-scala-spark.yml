@@ -1,0 +1,41 @@
+name: Scala CI
+
+on:
+  push:
+    branches: [ "development" ]
+    paths:
+      - 'spark-app/**'
+  pull_request:
+    branches: [ "development" ]
+    paths:
+      - 'spark-app/**'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'sbt'
+
+      - name: Setup sbt installer
+        uses: sbt/setup-sbt@v1.1.14
+        with:
+          sbt-runner-version: 1.11.7
+
+      - name: Compile
+        run: sbt clean compile
+
+      - name: Run tests
+        run: sbt test
+        env:
+          SBT_GITHUB_DEPENDENCY_GRAPH_ENABLED: false  # disables 403 errors

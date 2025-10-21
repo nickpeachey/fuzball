@@ -2,10 +2,15 @@ name: Frontend CI
 
 on:
   push:
+    branches:
+      - development
     paths:
       - 'frontend/**'
       - '.github/workflows/frontend-ci.yml'
   pull_request:
+    types: [closed]
+    branches:
+      - development
     paths:
       - 'frontend/**'
       - '.github/workflows/frontend-ci.yml'
@@ -19,6 +24,8 @@ permissions:
 
 jobs:
   build-and-test:
+    # Run on push to development or when PRs to development are merged
+    if: github.event_name != 'pull_request' || github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     defaults:
       run:

@@ -10,7 +10,10 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
+  // Extend Next.js + TypeScript rules
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+
+  // Global ignores
   {
     ignores: [
       "node_modules/**",
@@ -18,7 +21,16 @@ const eslintConfig = [
       "out/**",
       "build/**",
       "next-env.d.ts",
+      "jest.config.cjs", // ✅ Add this line
     ],
+  },
+
+  // ✅ Optional: override rules for config files if you prefer not to ignore
+  {
+    files: ["jest.config.cjs"],
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+    },
   },
 ];
 

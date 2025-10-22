@@ -5,20 +5,20 @@ import { makeStore } from '@/lib/store'
 import ProductPage from '@/app/product/page'
 
 describe('Product Page', () => {
-  it('renders Counter with initial value and increments on click', () => {
-    render(
-      <Provider store={makeStore()}>
-        <ProductPage />
-      </Provider>
-    )
+    it('renders Counter with initial value and increments on click', () => {
+        render(
+            <Provider store={makeStore()}>
+                <ProductPage />
+            </Provider>
+        )
 
-    // Should show initial count from the store
-    expect(screen.getByText(/Count:/)).toHaveTextContent('Count: 0')
+        // Should show initial count from the store
+        expect(screen.getByText(/Count:/)).toHaveTextContent('Count: 0')
 
-    // Click the increment button
-    fireEvent.click(screen.getByRole('button', { name: /Increment/i }))
+        // Click the increment button
+        fireEvent.click(screen.getByRole('button', { name: /Increment/i }))
 
-    // Expect count to update
-    expect(screen.getByText(/Count:/)).toHaveTextContent('Count: 1')
-  })
+        // Expect count to update
+        expect(screen.getByText(/Count:/)).toHaveTextContent('Count: 1')
+    })
 })

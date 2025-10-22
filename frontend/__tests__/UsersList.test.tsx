@@ -13,13 +13,15 @@ beforeEach(() => {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
     });
-    // @ts-ignore
-    global.fetch = jest.fn().mockResolvedValue(res);
+    const g = globalThis as unknown as { fetch?: jest.Mock };
+    g.fetch = jest.fn().mockResolvedValue(res);
 });
 
 afterEach(() => {
-    // @ts-ignore
-    global.fetch && (global.fetch as jest.Mock).mockReset();
+    const g = globalThis as unknown as { fetch?: jest.Mock };
+    if (g.fetch) {
+        g.fetch.mockReset();
+    }
 });
 
 test("renders users from API", async () => {

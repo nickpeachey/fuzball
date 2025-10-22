@@ -1,0 +1,15 @@
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
+export const BASE_URL = "https://jsonplaceholder.typicode.com"; // ✅ add this export
+
+export const usersApi = createApi({
+    reducerPath: "usersApi",
+    baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+    endpoints: (builder) => ({
+        getUsers: builder.query<{ id: number; name: string }[], void>({
+            query: () => "/users",
+        }),
+    }),
+});
+
+export const { useGetUsersQuery } = usersApi;
